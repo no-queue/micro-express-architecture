@@ -1,9 +1,10 @@
 'use strict'
 
-const express = require('express')
+const config = require('./utils/config')
 const jwt = require('express-jwt')
 
-const App = express()
+config.init()
+const App = config.App
 
 App.use(
     jwt({secret: process.env.API_SECRET}).unless({
@@ -16,5 +17,6 @@ App.use(
 )
 
 App.use('/example', require('./controllers/ExampleController'))
+App.use('/', require('./controllers/DefaultController'))
 
 module.exports = App
